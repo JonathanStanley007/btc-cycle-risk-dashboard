@@ -403,6 +403,10 @@ def apply_app_theme(st, appearance):
             .btc-context-line span {{
                 color: {tokens['secondary_text']} !important;
             }}
+            .btc-context-line strong {{
+                color: {tokens['primary_text']} !important;
+                font-weight: 750;
+            }}
             .btc-context-line .dot {{
                 color: {tokens['muted_text']} !important;
                 font-weight: 700;
@@ -973,15 +977,23 @@ def render_app_header():
     )
 
 
-def render_context_line(as_of_label):
+def render_context_line(as_of_label, api_mode):
     import streamlit as st
+
+    source_label = (
+        "Coin Metrics Pro daily BTC data"
+        if api_mode.startswith("Pro")
+        else "Coin Metrics Community daily BTC data"
+    )
 
     st.markdown(
         f"""
         <div class="btc-context-line">
-            <span>As of {as_of_label}</span>
+            <span><strong>Updated through:</strong> {as_of_label}</span>
             <span class="dot">•</span>
-            <span>Daily Coin Metrics data</span>
+            <span><strong>Source:</strong> {source_label}</span>
+            <span class="dot">•</span>
+            <span>Not live tick-by-tick</span>
         </div>
         """,
         unsafe_allow_html=True,
@@ -1586,7 +1598,7 @@ def main():
         dca_period,
     )
 
-    render_context_line(as_of_label)
+    render_context_line(as_of_label, api_mode)
 
     section_header(
         "Current Signal",
