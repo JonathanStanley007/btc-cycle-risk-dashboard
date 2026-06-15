@@ -1296,7 +1296,7 @@ def render_risk_chart(
 
     st.plotly_chart(
         build_chart(frame, chart_options, show_dca_guide, dca_ceiling, tokens),
-        use_container_width=True,
+        width="stretch",
     )
 
 
